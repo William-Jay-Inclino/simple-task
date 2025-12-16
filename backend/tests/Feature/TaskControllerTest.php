@@ -216,7 +216,8 @@ test('can delete a task', function () {
     $task = Task::factory()->create(['user_id' => $this->user->id]);
 
     $this->deleteJson("/api/tasks/{$task->id}")
-        ->assertStatus(204);
+        ->assertStatus(200)
+        ->assertJsonPath('data.id', $task->id);
 
     $this->assertDatabaseMissing('tasks', ['id' => $task->id]);
 });
