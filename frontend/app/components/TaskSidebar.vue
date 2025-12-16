@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useTaskStore } from '~/stores/taskStore'
 import { formatDateLabel, getWeekKey, formatDate } from '~/utils/date'
+import { LucideX } from 'lucide-vue-next'
 
 interface DateItem {
     label: string
@@ -11,14 +12,17 @@ interface DateItem {
 
 interface Props {
     selectedDate?: string
+    isOpen?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    selectedDate: 'today'
+    selectedDate: 'today',
+    isOpen: false
 })
 
 const emit = defineEmits<{
     selectDate: [value: string]
+    close: []
 }>()
 
 const taskStore = useTaskStore()
@@ -87,6 +91,7 @@ const dateItems = computed((): DateItem[] => {
 
 const handleDateSelect = async(value: string) => {
     emit('selectDate', value)
+    emit('close') // Close sidebar on mobile after selection
 }
 
 const isSelected = (value: string) => {
@@ -104,7 +109,51 @@ onMounted(async () => {
 </script>
 
 <template>
-    <aside class="w-64 overflow-y-auto bg-white p-6">
+    <!-- Mobile Drawer -->
+    <Transition
+        enter-active-class="transition-transform duration-300"
+        leave-active-class="transition-transform duration-300"
+        enter-from-class="-translate-x-full"
+        leave-to-class="-translate-x-full"
+    >
+        <aside
+            v-if="isOpen"
+            class="fixed inset-y-0 left-0 z-40 w-64 overflow-y-auto bg-white p-6 shadow-xl lg:hidden"
+        >
+            <!-- Close Button -->
+            <div class="mb-4 flex items-center justify-between">
+                <h2 class="text-lg font-semibold text-gray-900">Dates</h2>
+                <button
+                    @click="emit('close')"
+                    class="rounded-lg p-1.5 text-gray-500 hover:bg-gray-100 transition-colors"
+                    aria-label="Close sidebar"
+                >
+                    <LucideX :size="20" />
+                </button>
+            </div>
+            
+            <div class="space-y-1">
+                <template v-for="item in dateItems" :key="item.value || item.label">
+                    <div v-if="item.section === 'header'" class="pt-4">
+                        <p class="px-4 text-xs text-gray-400">{{ item.label }}</p>
+                    </div>
+                    <button
+                        v-else
+                        @click="handleDateSelect(item.value)"
+                        class="w-full rounded-lg px-4 py-2 text-left text-sm flex items-center justify-between"
+                        :class="isSelected(item.value) 
+                            ? 'rounded-full bg-black font-medium text-white' 
+                            : 'hover:bg-gray-100'"
+                    >
+                        <span>{{ item.label }}</span>
+                    </button>
+                </template>
+            </div>
+        </aside>
+    </Transition>
+
+    <!-- Desktop Sidebar -->
+    <aside class="hidden lg:block w-64 overflow-y-auto bg-white p-6 border-r border-gray-200">
         <div class="space-y-1">
             <template v-for="item in dateItems" :key="item.value || item.label">
                 <div v-if="item.section === 'header'" class="pt-4">
@@ -119,15 +168,6 @@ onMounted(async () => {
                         : 'hover:bg-gray-100'"
                 >
                     <span>{{ item.label }}</span>
-                    <!-- <span 
-                        v-if="item.count"
-                        class="rounded-full px-2 py-0.5 text-xs font-medium"
-                        :class="isSelected(item.value) 
-                            ? 'bg-white/20 text-white' 
-                            : 'bg-gray-100 text-gray-600'"
-                    >
-                        {{ item.count }}
-                    </span> -->
                 </button>
             </template>
         </div>

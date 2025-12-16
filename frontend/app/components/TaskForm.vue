@@ -36,7 +36,7 @@ const handleKeyDown = (event: KeyboardEvent) => {
     <div
         :class="[
             position === 'bottom' 
-                ? 'fixed bottom-0 left-64 right-0 bg-white p-6' 
+                ? 'fixed bottom-0 left-0 right-0 bg-white p-4 sm:p-6 lg:left-64' 
                 : 'w-full'
         ]"
     >
@@ -45,14 +45,15 @@ const handleKeyDown = (event: KeyboardEvent) => {
                 <textarea
                     v-model="newTaskStatement"
                     :placeholder="placeholder"
-                    class="w-full rounded-2xl border border-gray-200 bg-white p-4 pr-12 text-sm focus:border-gray-300 focus:outline-none resize-none"
+                    class="w-full rounded-2xl border border-gray-200 bg-white p-3 pr-12 text-sm focus:border-gray-300 focus:outline-none resize-none sm:p-4 touch-manipulation"
                     :rows="rows"
                     @keydown="handleKeyDown"
                 ></textarea>
                 <button
                     @click="handleAddTask"
-                    class="absolute bottom-4 right-4 rounded-full bg-black p-2 text-white hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed"
+                    class="absolute bottom-3 right-3 rounded-full bg-black p-2 text-white hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors touch-manipulation sm:bottom-4 sm:right-4"
                     :disabled="!newTaskStatement.trim()"
+                    aria-label="Add task"
                 >
                     <LucideArrowUp :size="20" />
                 </button>

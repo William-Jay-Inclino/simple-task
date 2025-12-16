@@ -22,7 +22,7 @@ class StoreTaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'statement' => ['required', 'string', 'max:5000'],
+            'statement' => ['required', 'string', 'max:100'],
             'task_date' => ['required', 'date'],
             'is_completed' => ['sometimes', 'boolean'],
         ];
@@ -37,7 +37,7 @@ class StoreTaskRequest extends FormRequest
     {
         return [
             'statement.required' => 'The task statement is required.',
-            'statement.max' => 'The task statement cannot exceed 5000 characters.',
+            'statement.max' => 'The task statement cannot exceed 100 characters.',
         ];
     }
 }

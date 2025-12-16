@@ -22,7 +22,7 @@ class UpdateTaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'statement' => ['sometimes', 'string', 'max:5000'],
+            'statement' => ['sometimes', 'string', 'max:100'],
             'task_date' => ['sometimes', 'date'],
             'is_completed' => ['sometimes', 'boolean'],
         ];
@@ -36,7 +36,7 @@ class UpdateTaskRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'statement.max' => 'The task statement cannot exceed 5000 characters.',
+            'statement.max' => 'The task statement cannot exceed 100 characters.',
         ];
     }
 }

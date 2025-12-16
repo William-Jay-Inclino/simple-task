@@ -69,13 +69,13 @@ const handleKeydown = (e: KeyboardEvent) => {
 </script>
 
 <template>
-    <div class="group flex items-center gap-3 rounded-xl border border-gray-200 bg-white p-4 hover:shadow-sm transition-shadow">
+    <div class="group flex items-center gap-2 rounded-xl border border-gray-200 bg-white p-3 hover:shadow-sm transition-shadow sm:gap-3 sm:p-4">
         <!-- Drag Handle -->
         <div 
-            class="drag-handle text-gray-400 hover:text-gray-600 transition-colors"
+            class="drag-handle text-gray-400 hover:text-gray-600 transition-colors touch-manipulation"
             :class="isDragDisabled ? 'cursor-not-allowed opacity-50' : 'cursor-move'"
         >
-            <LucideGripVertical :size="20" />
+            <LucideGripVertical :size="20" class="sm:w-5 sm:h-5" />
         </div>
 
         <div class="relative flex items-center">
@@ -83,11 +83,11 @@ const handleKeydown = (e: KeyboardEvent) => {
                 type="checkbox"
                 :checked="task.is_completed"
                 @change="handleToggle"
-                class="h-5 w-5 cursor-pointer appearance-none rounded-full border-2 border-gray-300 checked:bg-black checked:border-black transition-colors"
+                class="h-5 w-5 cursor-pointer appearance-none rounded-full border-2 border-gray-300 checked:bg-black checked:border-black transition-colors touch-manipulation sm:h-5 sm:w-5"
             />
             <svg
                 v-if="task.is_completed"
-                class="absolute left-0 h-5 w-5 p-0.5 pointer-events-none text-white"
+                class="absolute left-0 h-5 w-5 p-0.5 pointer-events-none text-white sm:h-5 sm:w-5"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -103,14 +103,14 @@ const handleKeydown = (e: KeyboardEvent) => {
                 v-model="editedStatement"
                 type="text"
                 @keydown="handleKeydown"
-                class="flex-1 rounded-lg border border-gray-300 px-3 py-1.5 text-sm focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400"
+                class="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 sm:py-1.5"
             />
             <button
                 @click="saveEdit"
-                class="flex h-8 w-8 items-center justify-center rounded-lg bg-black text-white hover:bg-gray-800 transition-colors"
+                class="flex h-9 w-9 items-center justify-center rounded-lg bg-black text-white hover:bg-gray-800 transition-colors touch-manipulation sm:h-8 sm:w-8"
                 title="Save (Enter)"
             >
-                <LucideCheck :size="16" />
+                <LucideCheck :size="18" class="sm:w-4 sm:h-4" />
             </button>
         </div>
 
@@ -118,7 +118,7 @@ const handleKeydown = (e: KeyboardEvent) => {
         <p
             v-else
             @click="startEditing"
-            class="flex-1 text-sm transition-colors"
+            class="flex-1 text-sm transition-colors break-words"
             :class="{ 
                 'line-through text-gray-500': task.is_completed,
                 'cursor-pointer hover:text-gray-700': !task.is_completed,
@@ -131,7 +131,7 @@ const handleKeydown = (e: KeyboardEvent) => {
         <button
             v-if="!isEditing"
             @click="handleDelete"
-            class="opacity-0 group-hover:opacity-100 text-gray-400 hover:text-red-500 transition-all"
+            class="text-gray-400 hover:text-red-500 transition-all touch-manipulation opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
         >
             <LucideTrash2 :size="18" />
         </button>

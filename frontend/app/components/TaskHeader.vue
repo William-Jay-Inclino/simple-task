@@ -1,7 +1,11 @@
 <script setup lang="ts">
-import { LucideRecycle, LucideUser, LucideSearch, LucideLogOut } from 'lucide-vue-next'
+import { LucideRecycle, LucideUser, LucideSearch, LucideLogOut, LucideMenu } from 'lucide-vue-next'
 import { useTaskStore } from '~/stores/taskStore'
 import { useAuthStore } from '~/stores/authStore'
+
+const emit = defineEmits<{
+    toggleSidebar: []
+}>()
 
 const taskStore = useTaskStore()
 const authStore = useAuthStore()
@@ -13,7 +17,11 @@ const toggleDropdown = () => {
 
 const handleLogout = async () => {
     await authStore.logout()
-    await navigateTo('/sign-in')
+    await navigateTo('/signin')
+}
+
+const handleToggleSidebar = () => {
+    emit('toggleSidebar')
 }
 
 // Close dropdown when clicking outside
@@ -32,12 +40,21 @@ onMounted(() => {
 </script>
 
 <template>
-    <nav class="flex items-center justify-between border-b border-gray-200 bg-white px-6 py-4">
-        <div class="flex items-center">
-            <LucideRecycle :size="32" class="text-gray-900" />
+    <nav class="flex items-center justify-between border-b border-gray-200 bg-white px-3 py-3 sm:px-4 sm:py-4 md:px-6">
+        <div class="flex items-center gap-2 sm:gap-3">
+            <!-- Mobile Menu Toggle -->
+            <button
+                @click="handleToggleSidebar"
+                class="rounded-lg p-2 text-gray-900 hover:bg-gray-100 transition-colors lg:hidden"
+                aria-label="Toggle sidebar"
+            >
+                <LucideMenu :size="24" />
+            </button>
+            
+            <LucideRecycle :size="28" class="text-gray-900 sm:w-8 sm:h-8" />
         </div>
         
-        <div class="flex-1 mx-8 max-w-md">
+        <div class="flex-1 mx-2 max-w-md sm:mx-4 md:mx-8">
             <div class="relative">
                 <LucideSearch :size="18" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                 <input
@@ -53,25 +70,33 @@ onMounted(() => {
             <button 
                 @click="toggleDropdown"
                 class="rounded-full bg-gray-900 p-2 text-white hover:bg-gray-800 transition-colors"
+                aria-label="User menu"
             >
                 <LucideUser :size="20" />
             </button>
 
             <!-- Dropdown Menu -->
-            <div 
-                v-if="isDropdownOpen"
-                class="absolute right-0 top-12 w-48 rounded-lg border border-gray-200 bg-white shadow-lg z-50"
+            <Transition
+                enter-active-class="transition-all duration-200"
+                leave-active-class="transition-all duration-200"
+                enter-from-class="opacity-0 scale-95"
+                leave-to-class="opacity-0 scale-95"
             >
-                <div class="p-2">
-                    <button
-                        @click="handleLogout"
-                        class="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
-                    >
-                        <LucideLogOut :size="16" />
-                        <span>Logout</span>
-                    </button>
+                <div 
+                    v-if="isDropdownOpen"
+                    class="absolute right-0 top-12 w-48 rounded-lg border border-gray-200 bg-white shadow-lg z-50"
+                >
+                    <div class="p-2">
+                        <button
+                            @click="handleLogout"
+                            class="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                        >
+                            <LucideLogOut :size="16" />
+                            <span>Logout</span>
+                        </button>
+                    </div>
                 </div>
-            </div>
+            </Transition>
         </div>
     </nav>
 </template>
