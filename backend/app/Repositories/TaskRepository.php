@@ -16,10 +16,6 @@ class TaskRepository implements TaskRepositoryInterface
             $query->search($filters['search']);
         }
 
-        if (isset($filters['is_completed'])) {
-            $query->where('is_completed', $filters['is_completed']);
-        }
-
         if (isset($filters['date'])) {
             $query->forDate($filters['date']);
         }

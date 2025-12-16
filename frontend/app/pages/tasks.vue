@@ -8,7 +8,11 @@ definePageMeta({
 const taskStore = useTaskStore()
 const isSidebarOpen = ref(false)
 
-const isEmpty = computed(() => taskStore.filteredTasks.length === 0)
+onMounted(async () => {
+    await taskStore.setDateNavigation(taskStore.selectedDate)
+})
+
+const isEmpty = computed(() => taskStore.tasks.length === 0)
 
 const toggleSidebar = () => {
     isSidebarOpen.value = !isSidebarOpen.value
@@ -42,7 +46,7 @@ const closeSidebar = () => {
             <TaskSidebar
                 :selected-date="taskStore.selectedDate"
                 :is-open="isSidebarOpen"
-                @select-date="taskStore.handleDateSelect"
+                @select-date="taskStore.setDateNavigation"
                 @close="closeSidebar"
             />
 

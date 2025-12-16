@@ -39,14 +39,4 @@ class Task extends Model
     {
         return $query->where('statement', 'ILIKE', '%'.$searchTerm.'%');
     }
-
-    public function scopeCompleted($query)
-    {
-        return $query->where('is_completed', true);
-    }
-
-    public function scopePending($query)
-    {
-        return $query->where('is_completed', false);
-    }
 }

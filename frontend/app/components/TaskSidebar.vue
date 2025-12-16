@@ -2,6 +2,7 @@
 import { useTaskStore } from '~/stores/taskStore'
 import { formatDateLabel, getWeekKey, formatDate } from '~/utils/date'
 import { LucideX } from 'lucide-vue-next'
+import { fetchTaskDates } from '~/services'
 
 interface DateItem {
     label: string
@@ -91,17 +92,17 @@ const dateItems = computed((): DateItem[] => {
 
 const handleDateSelect = async(value: string) => {
     emit('selectDate', value)
-    emit('close') // Close sidebar on mobile after selection
+    emit('close')
 }
 
 const isSelected = (value: string) => {
     return props.selectedDate === value
 }
 
-// Fetch task dates on mount
 onMounted(async () => {
     try {
-        await taskStore.fetchTaskDates()
+        const taskDates = await fetchTaskDates()
+        taskStore.setTaskDates({ taskDates })
     } catch (error) {
         console.error('Failed to fetch task dates:', error)
     }

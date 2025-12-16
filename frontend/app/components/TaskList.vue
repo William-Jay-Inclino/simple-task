@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useTaskStore } from '~/stores/taskStore'
-import { showConfirmDelete } from '~/utils/swal'
+import { showConfirmDelete } from '~/utils'
 import { VueDraggable } from 'vue-draggable-plus'
 import { formatDate } from '~/utils/date'
 
@@ -17,13 +17,13 @@ const handleDeleteTask = async (taskId: number) => {
     })
 
     if (result.isConfirmed) {
-        await taskStore.deleteTask(taskId)
+        await taskStore.removeTask(taskId)
     }
 }
 
 const onDragEnd = async () => {
     // Get the current task IDs in the new order
-    const taskIds = taskStore.filteredTasks.map(task => task.id)
+    const taskIds = taskStore.tasks.map(task => task.id)
     
     // Determine the date for reordering
     let date: string
@@ -48,7 +48,7 @@ const onDragEnd = async () => {
 
 <template>
     <div class="mx-auto max-w-3xl">
-        <div v-if="taskStore.filteredTasks.length === 0" class="flex min-h-[400px] flex-col items-center justify-center px-4">
+        <div v-if="taskStore.tasks.length === 0" class="flex min-h-[400px] flex-col items-center justify-center px-4">
             <h2 class="text-xl font-semibold text-gray-400 text-center sm:text-2xl">No tasks found</h2>
         </div>
 
@@ -63,7 +63,7 @@ const onDragEnd = async () => {
             :class="{ 'cursor-not-allowed': !!taskStore.searchQuery.trim() }"
         >
             <TaskListItem
-                v-for="task in taskStore.filteredTasks"
+                v-for="task in taskStore.tasks"
                 :key="task.id"
                 :task="task"
                 @toggle="handleToggleTask"

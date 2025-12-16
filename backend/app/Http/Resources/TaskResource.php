@@ -7,11 +7,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class TaskResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
+    
     public function toArray(Request $request): array
     {
         return [
@@ -23,4 +19,38 @@ class TaskResource extends JsonResource
             'updated_at' => $this->updated_at?->toISOString(),
         ];
     }
+
+    public function withResponse($request, $response): void
+    {
+        $original = json_decode($response->getContent(), true);
+        $method = $request->method();
+        
+        $messages = [
+            'POST' => 'Task created successfully',
+            'GET' => 'Task retrieved successfully',
+            'PUT' => 'Task updated successfully',
+            'PATCH' => 'Task updated successfully',
+            'DELETE' => 'Task deleted successfully',
+        ];
+
+        if ($method === 'DELETE') {
+            $responseData = [
+                'success' => true,
+                'message' => $messages[$method],
+                'data' => null
+            ];
+        }
+
+        // Extract data from Laravel's default wrapper
+        $data = $original['data'] ?? $original;
+        
+        $responseData = [
+            'success' => true,
+            'message' => $messages[$method] ?? 'Operation completed successfully',
+            'data' => $data
+        ];
+
+        $response->setContent(json_encode($responseData));
+    }
+
 }

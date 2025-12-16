@@ -21,7 +21,6 @@ class TaskController extends Controller
     {
         $filters = [
             'search' => $request->query('search'),
-            'is_completed' => $request->query('is_completed'),
             'date' => $request->query('date'),
         ];
 
@@ -80,7 +79,8 @@ class TaskController extends Controller
 
         $this->taskRepository->delete($task);
 
-        return response()->json(null, 204);
+        return (new TaskResource($task))->response();
+
     }
 
     /**

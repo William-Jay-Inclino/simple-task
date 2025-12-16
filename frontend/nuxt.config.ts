@@ -22,5 +22,8 @@ export default defineNuxtConfig({
 		'@pinia/nuxt',
 		'@pinia-plugin-persistedstate/nuxt',
     ],
+	plugins: [
+		{ src: '~/plugins/vue-toastification.ts', mode: 'client' },
+	],
     ssr: true,
 })

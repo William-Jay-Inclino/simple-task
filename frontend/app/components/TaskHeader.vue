@@ -17,6 +17,7 @@ const toggleDropdown = () => {
 
 const handleLogout = async () => {
     await authStore.logout()
+    taskStore.$reset()
     await navigateTo('/signin')
 }
 

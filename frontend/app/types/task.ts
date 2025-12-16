@@ -14,7 +14,9 @@ export interface TasksResponse {
 }
 
 export interface TaskResponse {
-    data: Task;
+    success: boolean;
+    message: string;
+    data?: Task;
 }
 
 export interface TaskDate {
