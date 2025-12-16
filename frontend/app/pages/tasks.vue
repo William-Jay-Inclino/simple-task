@@ -50,7 +50,7 @@ const closeSidebar = () => {
             <main class="flex-1 overflow-y-auto bg-white p-4 pb-32 sm:p-6 md:p-8">
 				
                 <!-- Empty State -->
-                <div v-if="isEmpty" class="flex min-h-[400px] flex-col items-center justify-center px-4">
+                <div v-if="isEmpty && !taskStore.searchQuery" class="flex min-h-[400px] flex-col items-center justify-center px-4">
                     <h2 class="mb-6 text-xl font-semibold text-center sm:text-2xl">What do you have in mind?</h2>
                     <div class="w-full max-w-xl">
                         <TaskForm

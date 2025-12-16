@@ -50,7 +50,6 @@ const onDragEnd = async () => {
     <div class="mx-auto max-w-3xl">
         <div v-if="taskStore.filteredTasks.length === 0" class="flex min-h-[400px] flex-col items-center justify-center px-4">
             <h2 class="text-xl font-semibold text-gray-400 text-center sm:text-2xl">No tasks found</h2>
-            <p class="mt-2 text-sm text-gray-500 text-center">Add a new task to get started</p>
         </div>
 
         <VueDraggable
