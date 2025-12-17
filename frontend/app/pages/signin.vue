@@ -65,7 +65,6 @@ const onSubmit = async () => {
                     <button
                         type="submit"
                         class="flex w-full items-center justify-center rounded-full bg-black px-4 py-2 text-white"
-                        :disabled="authStore.isLoading"
                     >
                         <span>Login</span>
                     </button>
