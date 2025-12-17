@@ -75,5 +75,9 @@ export const useAuthStore = defineStore('auth', () => {
         fetchUser,
     }
 },
-    { persist: true } 
+    { 
+        persist: {
+            pick: ['user', 'isAuthenticated']
+        } 
+    } 
 )
