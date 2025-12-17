@@ -1,9 +1,15 @@
 # SimpleTask
 
 <p align="center">
-	<a href="https://jaytechsolutions.cloud/simple-task/signin" target="_blank">
-		<img src="https://img.shields.io/badge/Live%20Demo-Click%20to%20Open-FF7A59?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" />
+	<a href="https://jaytechsolutions.cloud/simple-task/signin" target="_blank" style="text-decoration:none;">
+		<span style="display:inline-block;background:#FF7A59;color:#fff;font-weight:700;padding:12px 22px;border-radius:10px;font-size:18px;box-shadow:0 8px 24px rgba(0,0,0,0.12);">
+			▶ Live Demo — Click to Open
+		</span>
 	</a>
+</p>
+
+<p align="center" style="margin-top:6px;color:#444;font-size:14px;">
+	<small>Sample users for demo: <code>charity@goteam.com</code> / <code>password</code> · <code>jay@goteam.com</code> / <code>password</code></small>
 </p>
 
 SimpleTask is a lightweight app that helps recruiters track their daily tasks. It's built as an API-first backend (Laravel) with a server-rendered frontend (Nuxt.js), communicating over a REST API.
@@ -170,10 +176,10 @@ pnpm run start:prod
 
 ## Sample Users (for login / testing)
 
-Use these accounts for local testing. Password for both users: `password`.
+Use these accounts for local testing:
 
-- `charity@goteam.com`
-- `jay@goteam.com`
+- `charity@goteam.com` - `password`
+- `jay@goteam.com` - `password`
 
 Note: `charity@goteam.com` has sample task records. `jay@goteam.com` has an empty task list (no tasks).
 
