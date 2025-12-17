@@ -4,10 +4,6 @@ import { useAuthStore } from '~/stores/authStore'
 import type { LoginCredentials } from '~/types'
 import { LucideRecycle } from 'lucide-vue-next'
 
-// definePageMeta({
-//     middleware: ['auth'],
-// })
-
 const authStore = useAuthStore()
 const form = ref<LoginCredentials>({ email: '', password: '' })
 const error = ref<string | null>(null)
@@ -18,7 +14,7 @@ const onSubmit = async () => {
     if (res.success) {
         await navigateTo('/tasks')
     } else {
-        error.value = res.error || 'Invalid credentials'
+        error.value = res.message || 'Invalid credentials'
     }
 }
 </script>

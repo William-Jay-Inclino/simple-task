@@ -2,13 +2,13 @@
 
 return [
     // Paths to apply CORS to
-    'paths' => ['api/*', 'sanctum/csrf-cookie'],
+    'paths' => ['api/*'],
 
     // Allowed methods
     'allowed_methods' => ['*'],
 
     // Allowed origins (no wildcard when using credentials)
-    'allowed_origins' => ['http://localhost:3001', 'http://127.0.0.1:3001'],
+    'allowed_origins' => ['*'],
 
     // Allowed origin patterns (none)
     'allowed_origins_patterns' => [],
@@ -22,6 +22,5 @@ return [
     // Max age
     'max_age' => 0,
 
-    // Supports credentials (cookies)
-    'supports_credentials' => true,
+    'supports_credentials' => false,
 ];

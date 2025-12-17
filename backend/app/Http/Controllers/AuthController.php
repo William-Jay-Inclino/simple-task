@@ -22,34 +22,33 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        $user = User::where('email', $request->email)->first();
+        $credentials = $request->only('email', 'password');
 
-        if (! $user || ! Hash::check($request->password, $user->password)) {
+        if (!Auth::attempt($credentials)) {
             throw ValidationException::withMessages([
                 'email' => ['The provided credentials are incorrect.'],
             ]);
         }
 
-        Auth::login($user);
+        $user = Auth::user();
+
+        $token = $user->createToken($request->email)->plainTextToken;
 
         return response()->json([
-            'user' => $user,
             'message' => 'Login successful',
+            'token' => $token,
+            'user' => $user,
         ]);
     }
-
     /**
      * Log the user out of the application.
      */
     public function logout(Request $request): JsonResponse
     {
-        Auth::guard('web')->logout();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        $request->user()->currentAccessToken()->delete();
 
         return response()->json([
-            'message' => 'Logout successful',
+            'message' => 'Successfully logged out from this device.'
         ]);
     }
 
@@ -58,8 +57,6 @@ class AuthController extends Controller
      */
     public function user(Request $request): JsonResponse
     {
-        return response()->json([
-            'user' => $request->user(),
-        ]);
+        return response()->json($request->user());
     }
 }
