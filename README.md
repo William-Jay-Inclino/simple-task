@@ -19,7 +19,7 @@ Login Page:
 
 ![Login](/readme-docs/login.png)
 
-Note: the sidebar only displays dates that have tasks
+Note: the sidebar shows only dates that have at least one task. Empty dates are omitted to avoid clutter and keep the sidebar focused on days with actual work, so you see meaningful entries at a glance. To record past work, set the task's `task_date` and mark it completed.
 
 Empty State:
 
