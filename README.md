@@ -42,15 +42,25 @@ Task List:
 
 ![Task List](/readme-docs/task_list.png)
 
-Empty state (mobile):
-
-![Mobile empty state](/readme-docs/mobile_empty_state.png)
-
-Task list (mobile):
-
-![Mobile task list](/readme-docs/mobile_task_list.png)
-
-This app is mobile responsive and PWA-ready.
+<table>
+  <tr>
+    <td align="center">
+      <img src="/readme-docs/mobile_empty_state.png" alt="Mobile empty state" width="250" />
+      <br />
+      <strong>Empty State</strong>
+    </td>
+    <td align="center">
+      <img src="/readme-docs/mobile_task_list.png" alt="Mobile task list" width="250" />
+      <br />
+      <strong>Task List</strong>
+    </td>
+    <td align="center">
+      <img src="/readme-docs/mobile_sidebar.png" alt="Mobile sidebar" width="250" />
+      <br />
+      <strong>Sidebar</strong>
+    </td>
+  </tr>
+</table>
 
 ---
 
