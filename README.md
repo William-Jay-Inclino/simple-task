@@ -15,6 +15,23 @@ SimpleTask is a lightweight app that helps recruiters track their daily tasks. I
 
 ## Tech Stack
 
+---
+
+## Screenshots
+
+Login Page:
+
+![Login](/readme-docs/login.png)
+
+Empty State:
+
+![Empty State](/readme-docs/empty_state.png)
+
+Task List:
+
+![Task List](/readme-docs/task_list.png)
+
+
 - **Backend**
 	- Laravel v12.42.0
 	- Laravel Sail (Postgres)
@@ -147,6 +164,8 @@ Note: `charity@goteam.com` has sample task records. `jay@goteam.com` has an empt
 - `frontend/` — Nuxt app with pages, components, stores, assets
 
 ---
+
+
 
 ## Developer
 
