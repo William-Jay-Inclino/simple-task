@@ -1,8 +1,8 @@
 import { defineStore } from "pinia";
 import type { Task, TaskDate } from "~/types";
 import { useDebounceFn } from '@vueuse/core'
-import { showSuccessToast, showErrorToast } from "~/utils";
 import * as taskService from "~/services/task.api";
+import { showErrorAlert } from "~/utils";
 
 export const useTaskStore = defineStore('task', () => {
 
@@ -63,9 +63,8 @@ export const useTaskStore = defineStore('task', () => {
     
             if(response.success && response.data) {
                 tasks.value.unshift(response.data);
-                showSuccessToast(response.message || 'Task added successfully');
             } else {
-                showErrorToast(response.message || 'Failed to add task');
+                showErrorAlert({ text: response.message || 'Failed to add task', title: 'Error' });
             }
 
         } catch (err: any) {
@@ -83,13 +82,12 @@ export const useTaskStore = defineStore('task', () => {
             const response = await taskService.updateTask({ taskId, statement: statement.trim() });
 
             if(response.success && response.data) {
-                showSuccessToast(response.message || 'Task updated successfully');
                 const index = tasks.value.findIndex(t => t.id === taskId);
                 if (index !== -1) {
                     tasks.value[index] = response.data;
                 }
             } else {
-                showErrorToast(response.message || 'Failed to update task');
+                showErrorAlert({ text: response.message || 'Failed to add task', title: 'Error' });
             }
             
         } catch (err: any) {
@@ -104,10 +102,9 @@ export const useTaskStore = defineStore('task', () => {
             const response = await taskService.deleteTask(taskId);
 
             if(response.success === true) {
-                showSuccessToast(response.message || 'Task deleted successfully');
                 tasks.value = tasks.value.filter(t => t.id !== taskId);
             } else {
-                showErrorToast(response.message || 'Failed to delete task');
+                showErrorAlert({ text: response.message || 'Failed to add task', title: 'Error' });
             }
             
         } catch (err: any) {
@@ -131,7 +128,7 @@ export const useTaskStore = defineStore('task', () => {
                     tasks.value[index] = response.data;
                 }
             } else {
-                showErrorToast(response.message || 'Failed to toggle task completion');
+                showErrorAlert({ text: response.message || 'Failed to add task', title: 'Error' });
             }
 
         } catch (err: any) {
