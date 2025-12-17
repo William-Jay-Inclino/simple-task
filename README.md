@@ -1,5 +1,11 @@
 # SimpleTask
 
+<p align="center">
+	<a href="https://jaytechsolutions.cloud/simple-task/signin" target="_blank">
+		<img src="https://img.shields.io/badge/Live%20Demo-Click%20to%20Open-FF7A59?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" />
+	</a>
+</p>
+
 SimpleTask is a lightweight app that helps recruiters track their daily tasks. It's built as an API-first backend (Laravel) with a server-rendered frontend (Nuxt.js), communicating over a REST API.
 
 ---
