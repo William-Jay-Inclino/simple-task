@@ -141,10 +141,6 @@ pnpm run build
 pnpm run start:prod
 ```
 
-Notes:
-- The frontend expects the backend API to be reachable at the `NUXT_PUBLIC_API_BASE_URL` you configure.
-- Pinia stores use the setup-style stores for TypeScript friendliness.
-
 ---
 
 ## Sample Users (for login / testing)
@@ -156,15 +152,7 @@ Use these accounts for local testing. Password for both users: `password`.
 
 Note: `charity@goteam.com` has sample task records. `jay@goteam.com` has an empty task list (no tasks).
 
-
-## Project Structure (high level)
-
-- `backend/` — Laravel API, migrations, models, repositories, tests
-- `frontend/` — Nuxt app with pages, components, stores, assets
-
 ---
-
-
 
 ## Developer
 
