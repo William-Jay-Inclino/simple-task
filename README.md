@@ -8,18 +8,14 @@
 	</a>
 </p>
 
-<p align="center" style="margin-top:8px;">
-	<span style="display:inline-block;background:#fbfbfb;border:1px solid #ececec;padding:12px 14px;border-radius:10px;font-size:13px;color:#222;box-shadow:0 6px 18px rgba(15,15,15,0.03);margin-right:10px;min-width:220px;">
-		<div style="color:#6b6b6b;font-size:12px;margin-bottom:6px;">charity — has demo tasks</div>
-		<div><strong>username:</strong> <code>charity@goteam.com</code></div>
-		<div><strong>password:</strong> <code>password</code></div>
-	</span>
-	<span style="display:inline-block;background:#fbfbfb;border:1px solid #ececec;padding:12px 14px;border-radius:10px;font-size:13px;color:#222;box-shadow:0 6px 18px rgba(15,15,15,0.03);min-width:220px;">
-		<div style="color:#6b6b6b;font-size:12px;margin-bottom:6px;">jay — no demo records</div>
-		<div><strong>username:</strong> <code>jay@goteam.com</code></div>
-		<div><strong>password:</strong> <code>password</code></div>
-	</span>
-</p>
+## Sample Users (for login / testing)
+
+Use these accounts for the demo:
+
+- `charity@goteam.com` - `password`
+- `jay@goteam.com` - `password`
+
+Note: `charity@goteam.com` has sample task records. `jay@goteam.com` has an empty task list (no tasks).
 
 ---
 
@@ -178,17 +174,6 @@ Open the app in your browser to the sign-in page: http://localhost:3001/signin
 pnpm run build
 pnpm run start:prod
 ```
-
----
-
-## Sample Users (for login / testing)
-
-Use these accounts for local testing:
-
-- `charity@goteam.com` - `password`
-- `jay@goteam.com` - `password`
-
-Note: `charity@goteam.com` has sample task records. `jay@goteam.com` has an empty task list (no tasks).
 
 ---
 
