@@ -8,8 +8,6 @@
 	</a>
 </p>
 
-## Sample Users (for login / testing)
-
 Use these accounts for the demo:
 
 - `charity@goteam.com` - `password`
