@@ -126,7 +126,14 @@ Note: If you don't have Composer installed, install it first. See https://getcom
 cd frontend
 ```
 
-2. Install dependencies with pnpm:
+2. Copy the example env and edit it as needed:
+
+```bash
+cp .env.example .env
+# Edit .env (set `NUXT_PUBLIC_API_BASE_URL`, etc.)
+```
+
+3. Install dependencies with pnpm:
 
 ```bash
 pnpm install
