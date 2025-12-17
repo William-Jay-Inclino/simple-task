@@ -35,9 +35,11 @@ SimpleTask is a lightweight app that helps recruiters track their daily tasks. I
 ## Prerequisites
 
 - Git
-- Docker & Docker Compose (used by Laravel Sail)
+- Composer
+- Docker & Docker Compose
 - Node.js (recommended LTS)
 - pnpm (install via `npm i -g pnpm`)
+
 
 ---
 
@@ -60,20 +62,27 @@ cp .env.example .env
 # Edit .env as needed (DB_* values for Postgres used by Sail)
 ```
 
-3. Start Laravel Sail (containers will bring up Postgres):
+3. Install PHP dependencies (this creates the `vendor` directory and `vendor/bin/sail`):
+
+```bash
+composer install
+```
+
+Note: If you don't have Composer installed, install it first. See https://getcomposer.org/download/ or use your OS package manager (for example, `sudo apt install composer` on Debian/Ubuntu).
+
+4. Start Laravel Sail (containers will bring up Postgres):
 
 ```bash
 ./vendor/bin/sail up -d
 ```
 
-4. Install/update composer dependencies & run migrations + seeders (inside Sail):
+5. Run migrations & seeders (inside Sail):
 
 ```bash
-./vendor/bin/sail composer install
 ./vendor/bin/sail artisan migrate --seed
 ```
 
-5. Run tests with Pest (inside Sail):
+6. Run tests with Pest (inside Sail):
 
 ```bash
 ./vendor/bin/sail test
@@ -106,6 +115,8 @@ NUXT_PUBLIC_API_BASE_URL=http://localhost:8000/api
 ```bash
 pnpm run start:dev
 ```
+
+Open the app in your browser to the sign-in page: http://localhost:3001/signin
 
 5. For production build & start (example):
 
