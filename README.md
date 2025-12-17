@@ -61,7 +61,7 @@ Task List:
 
 ## Quick Install & Run
 
-Below are minimal steps to get both apps running locally. Run these from a zsh-compatible shell.
+Below are minimal steps to get both apps running locally.
 
 ### Backend (Laravel)
 
