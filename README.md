@@ -8,11 +8,18 @@
 	</a>
 </p>
 
-<p align="center" style="margin-top:6px;color:#444;font-size:14px;">
-	<small>Sample users for demo: <code>charity@goteam.com</code> / <code>password</code> · <code>jay@goteam.com</code> / <code>password</code></small>
+<p align="center" style="margin-top:8px;">
+	<span style="display:inline-block;background:#fbfbfb;border:1px solid #ececec;padding:12px 14px;border-radius:10px;font-size:13px;color:#222;box-shadow:0 6px 18px rgba(15,15,15,0.03);margin-right:10px;min-width:220px;">
+		<div style="color:#6b6b6b;font-size:12px;margin-bottom:6px;">charity — has demo tasks</div>
+		<div><strong>username:</strong> <code>charity@goteam.com</code></div>
+		<div><strong>password:</strong> <code>password</code></div>
+	</span>
+	<span style="display:inline-block;background:#fbfbfb;border:1px solid #ececec;padding:12px 14px;border-radius:10px;font-size:13px;color:#222;box-shadow:0 6px 18px rgba(15,15,15,0.03);min-width:220px;">
+		<div style="color:#6b6b6b;font-size:12px;margin-bottom:6px;">jay — no demo records</div>
+		<div><strong>username:</strong> <code>jay@goteam.com</code></div>
+		<div><strong>password:</strong> <code>password</code></div>
+	</span>
 </p>
-
-SimpleTask is a lightweight app that helps recruiters track their daily tasks. It's built as an API-first backend (Laravel) with a server-rendered frontend (Nuxt.js), communicating over a REST API.
 
 ---
 
