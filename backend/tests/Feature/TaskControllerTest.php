@@ -2,14 +2,15 @@
 
 use App\Models\Task;
 use App\Models\User;
+use Laravel\Sanctum\Sanctum;
 
 beforeEach(function () {
     $this->user = User::factory()->create();
-    $this->actingAs($this->user, 'web');
 });
 
 // Index Tests
 test('can list all tasks for authenticated user', function () {
+    Sanctum::actingAs($this->user);
     Task::factory()->count(3)->create(['user_id' => $this->user->id]);
     Task::factory()->count(2)->create(); // Other user's tasks
 
@@ -19,6 +20,7 @@ test('can list all tasks for authenticated user', function () {
 });
 
 test('can search tasks by statement', function () {
+    Sanctum::actingAs($this->user);
     Task::factory()->create([
         'user_id' => $this->user->id,
         'statement' => 'Buy groceries',
@@ -35,14 +37,13 @@ test('can search tasks by statement', function () {
 });
 
 test('index requires authentication', function () {
-    auth()->logout();
-
     $this->getJson('/api/tasks')
         ->assertStatus(401);
 });
 
 // Store Tests
 test('can create a new task', function () {
+    Sanctum::actingAs($this->user);
     $data = [
         'statement' => 'New task to complete',
         'task_date' => now()->format('Y-m-d'),
@@ -63,14 +64,16 @@ test('can create a new task', function () {
 });
 
 test('store validates required fields', function () {
+    Sanctum::actingAs($this->user);
     $this->postJson('/api/tasks', [])
         ->assertStatus(422)
         ->assertJsonValidationErrors(['statement', 'task_date']);
 });
 
 test('store validates statement max length', function () {
+    Sanctum::actingAs($this->user);
     $this->postJson('/api/tasks', [
-        'statement' => str_repeat('a', 5001),
+        'statement' => str_repeat('a', 101),
         'task_date' => now()->format('Y-m-d'),
     ])
         ->assertStatus(422)
@@ -78,6 +81,7 @@ test('store validates statement max length', function () {
 });
 
 test('store validates is_completed must be boolean', function () {
+    Sanctum::actingAs($this->user);
     $this->postJson('/api/tasks', [
         'statement' => 'Test task',
         'task_date' => now()->format('Y-m-d'),
@@ -88,8 +92,6 @@ test('store validates is_completed must be boolean', function () {
 });
 
 test('store requires authentication', function () {
-    auth()->logout();
-
     $this->postJson('/api/tasks', [
         'statement' => 'Test task',
         'task_date' => now()->format('Y-m-d'),
@@ -99,6 +101,7 @@ test('store requires authentication', function () {
 
 // Show Tests
 test('can retrieve a specific task', function () {
+    Sanctum::actingAs($this->user);
     $task = Task::factory()->create([
         'user_id' => $this->user->id,
         'statement' => 'Specific task',
@@ -111,6 +114,7 @@ test('can retrieve a specific task', function () {
 });
 
 test('cannot view another users task', function () {
+    Sanctum::actingAs($this->user);
     $otherUser = User::factory()->create();
     $task = Task::factory()->create(['user_id' => $otherUser->id]);
 
@@ -119,20 +123,20 @@ test('cannot view another users task', function () {
 });
 
 test('show returns 404 for non existent task', function () {
+    Sanctum::actingAs($this->user);
     $this->getJson('/api/tasks/99999')
         ->assertStatus(404);
 });
 
 test('show requires authentication', function () {
     $task = Task::factory()->create(['user_id' => $this->user->id]);
-    auth()->logout();
-
     $this->getJson("/api/tasks/{$task->id}")
         ->assertStatus(401);
 });
 
 // Update Tests
 test('can update task statement', function () {
+    Sanctum::actingAs($this->user);
     $task = Task::factory()->create([
         'user_id' => $this->user->id,
         'statement' => 'Original statement',
@@ -151,6 +155,7 @@ test('can update task statement', function () {
 });
 
 test('can update only is_completed', function () {
+    Sanctum::actingAs($this->user);
     $task = Task::factory()->create([
         'user_id' => $this->user->id,
         'statement' => 'Original statement',
@@ -166,6 +171,7 @@ test('can update only is_completed', function () {
 });
 
 test('can update both statement and is_completed', function () {
+    Sanctum::actingAs($this->user);
     $task = Task::factory()->create([
         'user_id' => $this->user->id,
         'statement' => 'Original',
@@ -182,6 +188,7 @@ test('can update both statement and is_completed', function () {
 });
 
 test('update validates statement max length', function () {
+    Sanctum::actingAs($this->user);
     $task = Task::factory()->create(['user_id' => $this->user->id]);
 
     $this->putJson("/api/tasks/{$task->id}", [
@@ -192,6 +199,7 @@ test('update validates statement max length', function () {
 });
 
 test('cannot update another users task', function () {
+    Sanctum::actingAs($this->user);
     $otherUser = User::factory()->create();
     $task = Task::factory()->create(['user_id' => $otherUser->id]);
 
@@ -203,8 +211,6 @@ test('cannot update another users task', function () {
 
 test('update requires authentication', function () {
     $task = Task::factory()->create(['user_id' => $this->user->id]);
-    auth()->logout();
-
     $this->putJson("/api/tasks/{$task->id}", [
         'statement' => 'Updated',
     ])
@@ -213,6 +219,7 @@ test('update requires authentication', function () {
 
 // Delete Tests
 test('can delete a task', function () {
+    Sanctum::actingAs($this->user);
     $task = Task::factory()->create(['user_id' => $this->user->id]);
 
     $this->deleteJson("/api/tasks/{$task->id}")
@@ -223,6 +230,7 @@ test('can delete a task', function () {
 });
 
 test('cannot delete another users task', function () {
+    Sanctum::actingAs($this->user);
     $otherUser = User::factory()->create();
     $task = Task::factory()->create(['user_id' => $otherUser->id]);
 
@@ -233,20 +241,20 @@ test('cannot delete another users task', function () {
 });
 
 test('delete returns 404 when deleting non existent task', function () {
+    Sanctum::actingAs($this->user);
     $this->deleteJson('/api/tasks/99999')
         ->assertStatus(404);
 });
 
 test('delete requires authentication', function () {
     $task = Task::factory()->create(['user_id' => $this->user->id]);
-    auth()->logout();
-
     $this->deleteJson("/api/tasks/{$task->id}")
         ->assertStatus(401);
 });
 
 // Dates Tests
 test('can fetch task dates', function () {
+    Sanctum::actingAs($this->user);
     $date1 = now()->subDays(1)->format('Y-m-d');
     $date2 = now()->subDays(2)->format('Y-m-d');
     $date3 = now()->subDays(3)->format('Y-m-d');
@@ -279,6 +287,7 @@ test('can fetch task dates', function () {
 });
 
 test('dates endpoint limits results', function () {
+    Sanctum::actingAs($this->user);
     for ($i = 0; $i < 50; $i++) {
         Task::factory()->create([
             'user_id' => $this->user->id,
@@ -292,14 +301,13 @@ test('dates endpoint limits results', function () {
 });
 
 test('dates requires authentication', function () {
-    auth()->logout();
-
     $this->getJson('/api/tasks/dates')
         ->assertStatus(401);
 });
 
 // Reorder Tests
 test('can reorder tasks', function () {
+    Sanctum::actingAs($this->user);
     $date = now()->format('Y-m-d');
     $task1 = Task::factory()->create([
         'user_id' => $this->user->id,
@@ -330,8 +338,6 @@ test('can reorder tasks', function () {
 });
 
 test('reorder requires authentication', function () {
-    auth()->logout();
-
     $this->postJson('/api/tasks/reorder', [
         'date' => now()->format('Y-m-d'),
         'task_ids' => [1, 2, 3],
@@ -340,6 +346,7 @@ test('reorder requires authentication', function () {
 });
 
 test('reorder validates required fields', function () {
+    Sanctum::actingAs($this->user);
     $this->postJson('/api/tasks/reorder', [])
         ->assertStatus(422)
         ->assertJsonValidationErrors(['date', 'task_ids']);
