@@ -15,11 +15,11 @@ SimpleTask is a lightweight app that helps recruiters track their daily tasks. I
 
 ## Screenshots
 
-Note: the sidebar only displays dates that have tasks
-
 Login Page:
 
 ![Login](/readme-docs/login.png)
+
+Note: the sidebar only displays dates that have tasks
 
 Empty State:
 
@@ -29,15 +29,9 @@ Task List:
 
 ![Task List](/readme-docs/task_list.png)
 
-Mobile (responsive):
-
 Empty state (mobile):
 
 ![Mobile empty state](/readme-docs/mobile_empty_state.png)
-
-Sidebar (mobile):
-
-![Mobile sidebar](/readme-docs/mobile_sidebar.png)
 
 Task list (mobile):
 
