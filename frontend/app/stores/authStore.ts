@@ -44,8 +44,6 @@ export const useAuthStore = defineStore('auth', () => {
         } catch (error) {
             console.error('Logout error:', error)
         } finally {
-            user.value = null
-            isAuthenticated.value = false
             clearAuthToken()
             $reset()
         }
