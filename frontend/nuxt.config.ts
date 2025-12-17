@@ -7,6 +7,7 @@ export default defineNuxtConfig({
 		}
     },
     app: {
+		baseURL: '/simple-task/',
 		head: {
 			title: 'Simple Task',
 			meta: [
