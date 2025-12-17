@@ -124,8 +124,8 @@ Notes:
 
 Use these accounts for local testing. Password for both users: `password`.
 
-- `charity@goteam.com` — password: `password`  
-- `jay@goteam.com` — password: `password`
+- `charity@goteam.com`
+- `jay@goteam.com`
 
 Note: `charity@goteam.com` has sample task records. `jay@goteam.com` has an empty task list (no tasks).
 
