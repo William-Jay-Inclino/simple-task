@@ -13,10 +13,6 @@ SimpleTask is a lightweight app that helps recruiters track their daily tasks. I
 
 ---
 
-## Tech Stack
-
----
-
 ## Screenshots
 
 Login Page:
@@ -31,6 +27,9 @@ Task List:
 
 ![Task List](/readme-docs/task_list.png)
 
+---
+
+## Tech Stack
 
 - **Backend**
 	- Laravel v12.42.0
