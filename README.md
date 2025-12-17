@@ -15,7 +15,7 @@ Use these accounts for the demo:
 - `charity@goteam.com` - `password`
 - `jay@goteam.com` - `password`
 
-Note: `charity@goteam.com` has sample task records. `jay@goteam.com` has an empty task list (no tasks).
+Note: `charity@goteam.com` contains dummy data, while `jay@goteam.com` does not.
 
 ---
 
