@@ -9,10 +9,10 @@ export default defineNuxtRouteMiddleware(async (to) => {
   }
 
   if (to.path.startsWith('/tasks') && !auth.isAuthenticated) {
-    return navigateTo('/signin')
+    await navigateTo({ path: '/signin' }) 
   }
 
   if (to.path === '/signin' && auth.isAuthenticated) {
-    return navigateTo('/tasks')
+    await navigateTo({ path: '/tasks' }) 
   }
 })
