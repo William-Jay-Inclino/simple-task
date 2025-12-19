@@ -37,20 +37,21 @@ class TaskResource extends JsonResource
             $responseData = [
                 'success' => true,
                 'message' => $messages[$method],
-                'data' => null
+                'data' => null,
+            ];
+        } else {
+            // Extract data from Laravel's default wrapper
+            $data = $original['data'] ?? $original;
+            
+            $responseData = [
+                'success' => true,
+                'message' => $messages[$method] ?? 'Operation completed successfully',
+                'data' => $data,
             ];
         }
 
-        // Extract data from Laravel's default wrapper
-        $data = $original['data'] ?? $original;
-        
-        $responseData = [
-            'success' => true,
-            'message' => $messages[$method] ?? 'Operation completed successfully',
-            'data' => $data
-        ];
-
         $response->setContent(json_encode($responseData));
     }
+
 
 }

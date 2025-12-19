@@ -26,11 +26,6 @@ class TaskRepository implements TaskRepositoryInterface
             ->get();
     }
 
-    public function findById(int $id): ?Task
-    {
-        return Task::find($id);
-    }
-
     public function create(array $data): Task
     {
         return Task::create($data);
@@ -46,14 +41,6 @@ class TaskRepository implements TaskRepositoryInterface
     public function delete(Task $task): bool
     {
         return $task->delete();
-    }
-
-    public function toggleCompletion(Task $task): Task
-    {
-        $task->is_completed = ! $task->is_completed;
-        $task->save();
-
-        return $task->fresh();
     }
 
     public function getTaskDates(int $userId, int $limit = 30): array
@@ -76,14 +63,48 @@ class TaskRepository implements TaskRepositoryInterface
     public function reorderTasks(int $userId, string $date, array $taskIds): bool
     {
         DB::transaction(function () use ($userId, $date, $taskIds) {
-            foreach ($taskIds as $index => $taskId) {
-                Task::where('id', $taskId)
-                    ->where('user_id', $userId)
-                    ->where('task_date', $date)
-                    ->update(['order' => $index]);
+            $tasks = Task::whereIn('id', $taskIds)
+                ->where('user_id', $userId)
+                ->where('task_date', $date)
+                ->get();
+
+            foreach ($tasks as $task) {
+                $task->order = array_search($task->id, $taskIds);
             }
+
+            $tasks->each->save(); // saves all tasks in the transaction
         });
 
         return true;
     }
+
+    // ALTERNATIVE IMPLEMENTATION IF NEEDED FOR OPTIMUM PERFORMANCE
+    /*
+    public function reorderTasks(int $userId, string $date, array $taskIds): bool
+    {
+        if (empty($taskIds)) {
+            return true;
+        }
+
+        DB::transaction(function () use ($userId, $date, $taskIds) {
+            $cases = [];
+            foreach ($taskIds as $index => $taskId) {
+                $cases[] = "WHEN id = {$taskId} THEN {$index}";
+            }
+            $caseSql = implode(' ', $cases);
+            $ids = implode(',', $taskIds);
+
+            DB::update("
+                UPDATE tasks
+                SET `order` = CASE {$caseSql} END
+                WHERE id IN ({$ids})
+                AND user_id = ?
+                AND task_date = ?
+            ", [$userId, $date]);
+        });
+
+        return true;
+    }
+    */
+
 }

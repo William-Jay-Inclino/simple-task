@@ -49,14 +49,13 @@ class TaskController extends Controller
             ->setStatusCode(201);
     }
 
-    public function show(Request $request, Task $task): TaskResource
+    public function show(Task $task): TaskResource
     {
         return new TaskResource($task);
     }
 
     public function update(UpdateTaskRequest $request, Task $task): TaskResource
     {
-
         $data = array_filter([
             'statement' => $request->input('statement'),
             'is_completed' => $request->input('is_completed'),
@@ -67,12 +66,10 @@ class TaskController extends Controller
         return new TaskResource($updatedTask);
     }
 
-    public function destroy(Request $request, Task $task): JsonResponse
+    public function destroy(Task $task): JsonResponse
     {
         $this->taskRepository->delete($task);
-
         return (new TaskResource($task))->response();
-
     }
 
     /**
