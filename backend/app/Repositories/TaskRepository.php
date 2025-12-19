@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Contracts\TaskRepositoryInterface;
 use App\Models\Task;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
 
 class TaskRepository implements TaskRepositoryInterface
@@ -74,12 +75,14 @@ class TaskRepository implements TaskRepositoryInterface
 
     public function reorderTasks(int $userId, string $date, array $taskIds): bool
     {
-        foreach ($taskIds as $index => $taskId) {
-            Task::where('id', $taskId)
-                ->where('user_id', $userId)
-                ->where('task_date', $date)
-                ->update(['order' => $index]);
-        }
+        DB::transaction(function () use ($userId, $date, $taskIds) {
+            foreach ($taskIds as $index => $taskId) {
+                Task::where('id', $taskId)
+                    ->where('user_id', $userId)
+                    ->where('task_date', $date)
+                    ->update(['order' => $index]);
+            }
+        });
 
         return true;
     }

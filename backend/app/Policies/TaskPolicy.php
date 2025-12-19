@@ -33,8 +33,20 @@ class TaskPolicy
         return $user->id === $task->user_id;
     }
 
-    public function reorder(User $user): bool
+    public function reorder(User $user, array $taskIds, string $date): bool
     {
+        $tasks = Task::whereIn('id', $taskIds)->get();
+
+        // Ensure all tasks belong to the user
+        if ($tasks->contains(fn ($task) => $task->user_id !== $user->id)) {
+            return false;
+        }
+
+        // Ensure all tasks have the same task_date as the request date
+        if ($tasks->contains(fn ($task) => $task->task_date->toDateString() !== $date)) {
+            return false;
+        }
+
         return true;
     }
 

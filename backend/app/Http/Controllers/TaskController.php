@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Contracts\TaskRepositoryInterface;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use App\Http\Requests\ReorderTaskRequest;
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
 use Illuminate\Http\JsonResponse;
@@ -96,16 +97,9 @@ class TaskController extends Controller
     /**
      * Reorder tasks for a specific date.
      */
-    public function reorder(Request $request): JsonResponse
+    public function reorder(ReorderTaskRequest $request): JsonResponse
     {
-
-        $this->authorize('reorder', Task::class);
-        
-        $request->validate([
-            'date' => ['required', 'date'],
-            'task_ids' => ['required', 'array'],
-            'task_ids.*' => ['required', 'integer', 'exists:tasks,id'],
-        ]);
+        $this->authorize('reorder', [Task::class, $request->input('task_ids'), $request->input('date')]);
 
         $this->taskRepository->reorderTasks(
             $request->user()->id,
