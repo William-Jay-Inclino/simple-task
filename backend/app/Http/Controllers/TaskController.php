@@ -15,7 +15,9 @@ class TaskController extends Controller
 {
     public function __construct(
         private readonly TaskRepositoryInterface $taskRepository
-    ) {}
+    ) {
+        $this->authorizeResource(Task::class, 'task');
+    }
 
     public function index(Request $request): AnonymousResourceCollection
     {
@@ -48,18 +50,11 @@ class TaskController extends Controller
 
     public function show(Request $request, Task $task): TaskResource
     {
-        if ($request->user()->cannot('view', $task)) {
-            abort(403);
-        }
-
         return new TaskResource($task);
     }
 
     public function update(UpdateTaskRequest $request, Task $task): TaskResource
     {
-        if ($request->user()->cannot('update', $task)) {
-            abort(403);
-        }
 
         $data = array_filter([
             'statement' => $request->input('statement'),
@@ -73,10 +68,6 @@ class TaskController extends Controller
 
     public function destroy(Request $request, Task $task): JsonResponse
     {
-        if ($request->user()->cannot('delete', $task)) {
-            abort(403);
-        }
-
         $this->taskRepository->delete($task);
 
         return (new TaskResource($task))->response();
@@ -88,6 +79,8 @@ class TaskController extends Controller
      */
     public function dates(Request $request): JsonResponse
     {
+        $this->authorize('viewAny', Task::class);
+
         $limit = $request->query('limit', 30);
 
         $dates = $this->taskRepository->getTaskDates(
@@ -105,6 +98,9 @@ class TaskController extends Controller
      */
     public function reorder(Request $request): JsonResponse
     {
+
+        $this->authorize('reorder', Task::class);
+        
         $request->validate([
             'date' => ['required', 'date'],
             'task_ids' => ['required', 'array'],

@@ -33,4 +33,9 @@ class TaskPolicy
         return $user->id === $task->user_id;
     }
 
+    public function reorder(User $user): bool
+    {
+        return true;
+    }
+
 }
